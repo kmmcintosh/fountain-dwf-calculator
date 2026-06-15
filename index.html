@@ -30,6 +30,7 @@ body { font-family: system-ui, sans-serif; background: #000; color: #fff; paddin
 .subtotal { font-size: 12px; color: #aaa; min-width: 40px; text-align: right; flex-shrink: 0; }
 .btn-remove { font-size: 11px; color: #666; background: none; border: none; cursor: pointer; padding: 0 0 0 8px; flex-shrink: 0; }
 .btn-remove:hover { color: #c0392b; }
+.marquee { font-size: 5vw; }
 .totals-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.25rem; }
 .metric { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 12px 14px; }
 .metric-label { font-size: 11px; color: #aaa; margin-bottom: 4px; }
@@ -44,6 +45,35 @@ body { font-family: system-ui, sans-serif; background: #000; color: #fff; paddin
 .btn-clear { height: 40px; padding: 0 16px; font-size: 13px; font-weight: 700; border-radius: 8px; border: 1px solid #aff274; background: #aff274; color: #000; cursor: pointer; }
 .btn-clear:hover { background: #9ddb63; border-color: #9ddb63; }
 .empty { color: #666; font-size: 13px; padding: .5rem 0; }
+
+@media (max-width: 768px) {
+  body { padding: 1rem; padding-bottom: 220px; }
+  .app { flex-direction: column; gap: 0; }
+  .left-col { width: 100%; max-width: 100%; }
+  .right-col {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: #111;
+    border-top: 1px solid #333;
+    padding: 12px 1rem;
+    z-index: 100;
+  }
+  .totals-row { flex-direction: row; gap: 8px; margin-bottom: 10px; }
+  .metric { flex: 1; padding: 8px 10px; }
+  .metric-label { font-size: 10px; }
+  .metric-val { font-size: 18px; }
+  .metric-val.big { font-size: 22px; }
+  .actions { flex-direction: row; gap: 6px; }
+  .btn-next { flex: 2; font-size: 13px; height: 44px; }
+  .btn-undo { flex: 2; font-size: 12px; height: 44px; padding: 0 8px; }
+  .btn-clear { flex: 1; font-size: 12px; height: 44px; padding: 0 8px; }
+  .prod-row { max-width: 100%; }
+  .add-row input[type=text] { min-width: 80px; }
+  .add-row input[type=number] { min-width: 60px; }
+}
 </style>
 </head>
 <body>
@@ -87,7 +117,7 @@ body { font-family: system-ui, sans-serif; background: #000; color: #fff; paddin
     <li>Add each item type you need to count, and the price. (Tall Cans, Dark & Stormy, Mixed Drink Single, Mixed Drink Double, Soda, Non-Alc Beer, etc.)</li>
     <li>Enter the items from your first chit. The total $ of that chit will be shown on the right.</li>
     <li><strong>Write that total $ down on the chit!</strong></li>
-    <li>Click <strong>Add Chit</strong> — the chit is added to the "Running Total, and the "This Chit" total is cleared.</li>
+    <li>Click <strong>Add Chit</strong> — the chit is added to the Running Total, and the "This Chit" total is cleared.</li>
     <li>Continue inputting all the chits the same way. The total amount of all chits entered will continue to be tracked in Running Total.</li>
     <li>When you've entered your last chit for that batch/day, (<span style="color:#c0392b;font-weight:500;">IMPORTANT!</span>) write down the Running Total for that batch/day.</li>
     <li>Click <strong>Clear Total</strong> when you're ready to start tallying the next batch.</li>
@@ -96,7 +126,7 @@ body { font-family: system-ui, sans-serif; background: #000; color: #fff; paddin
   <ul style="padding-left:18px;">
     <li style="margin-bottom:8px;">I recommend messing around with the calculator for a minute before getting into properly tallying. Add items, remove items, hit the buttons, see what it does.</li>
     <li style="margin-bottom:8px;">Made a mistake and want to remove the last chit from the Running Total? Hit <strong>Remove Last Chit</strong>.</li>
-    <li><strong>If you want to calculate cash sales separate from digital sales:</strong> As you go through the chits, don't include the receipts that say they were paid in cash (assuming the servers marked that down.) Put them aside. Once you get through all the chits for the day, you write down your digital sales total, then click <strong>Clear total</strong>. You have your pile of cash sales chits that you put aside as you went, and now you can tally up those. <strong>TL;DR:</strong> Do all the day's digital sales chits, write it down, clear the total, and then do the day's cash sales, write it down, clear the total. <em>This could also apply if you want to tally bar sales chits separate from patio sales chits.</em></li>
+    <li><strong>If you want to calculate cash sales separate from digital sales:</strong> As you go through the chits, don't include the receipts that say they were paid in cash (assuming the servers marked that down.) Put them aside. Once you get through all the chits for the day, you write down your digital sales total, then click <strong>Clear Total</strong>. You have your pile of cash sales chits that you put aside as you went, and now you can tally up those. <strong>TL;DR:</strong> Do all the day's digital sales chits, write it down, clear the total, and then do the day's cash sales, write it down, clear the total. <em>This could also apply if you want to tally bar sales chits separate from patio sales chits.</em></li>
   </ul>
 </div>
 
@@ -159,7 +189,7 @@ function undoLast() {
 }
 
 function clearTotal() {
-  if (!confirm('Are you sure that you want to clear the Running Total? Did you write it down yet?')) return;
+  if (!confirm('Are you sure that you want to clear the Running Total?\nDid you write it down yet?')) return;
   runningTotal = 0;
   chitCount = 0;
   lastChitAmount = 0;
