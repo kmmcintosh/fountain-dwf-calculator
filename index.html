@@ -30,7 +30,6 @@ body { font-family: system-ui, sans-serif; background: #000; color: #fff; paddin
 .subtotal { font-size: 12px; color: #aaa; min-width: 40px; text-align: right; flex-shrink: 0; }
 .btn-remove { font-size: 11px; color: #666; background: none; border: none; cursor: pointer; padding: 0 0 0 8px; flex-shrink: 0; }
 .btn-remove:hover { color: #c0392b; }
-.marquee { font-size: 5vw; }
 .totals-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.25rem; }
 .metric { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 12px 14px; }
 .metric-label { font-size: 11px; color: #aaa; margin-bottom: 4px; }
@@ -47,7 +46,7 @@ body { font-family: system-ui, sans-serif; background: #000; color: #fff; paddin
 .empty { color: #666; font-size: 13px; padding: .5rem 0; }
 
 @media (max-width: 768px) {
-  body { padding: 1rem; padding-bottom: 220px; }
+  body { padding: 0.75rem; padding-bottom: 160px; }
   .app { flex-direction: column; gap: 0; }
   .left-col { width: 100%; max-width: 100%; }
   .right-col {
@@ -58,26 +57,27 @@ body { font-family: system-ui, sans-serif; background: #000; color: #fff; paddin
     width: 100%;
     background: #111;
     border-top: 1px solid #333;
-    padding: 12px 1rem;
+    padding: 8px 1rem;
     z-index: 100;
   }
-  .totals-row { flex-direction: row; gap: 8px; margin-bottom: 10px; }
-  .metric { flex: 1; padding: 8px 10px; }
-  .metric-label { font-size: 10px; }
-  .metric-val { font-size: 18px; }
-  .metric-val.big { font-size: 22px; }
+  .totals-row { flex-direction: row; gap: 6px; margin-bottom: 6px; }
+  .metric { flex: 1; padding: 6px 8px; }
+  .metric-label { font-size: 9px; margin-bottom: 2px; }
+  .metric-val { font-size: 15px; }
+  .metric-val.big { font-size: 18px; }
   .actions { flex-direction: row; gap: 6px; }
-  .btn-next { flex: 2; font-size: 13px; height: 44px; }
-  .btn-undo { flex: 2; font-size: 12px; height: 44px; padding: 0 8px; }
-  .btn-clear { flex: 1; font-size: 12px; height: 44px; padding: 0 8px; }
+  .btn-next { flex: 2; font-size: 12px; height: 36px; }
+  .btn-undo { flex: 2; font-size: 11px; height: 36px; padding: 0 6px; }
+  .btn-clear { flex: 1; font-size: 11px; height: 36px; padding: 0 6px; }
   .prod-row { max-width: 100%; }
   .add-row input[type=text] { min-width: 80px; }
   .add-row input[type=number] { min-width: 60px; }
+  marquee { font-size: 3vw; }
 }
 </style>
 </head>
 <body>
-<marquee behavior="scroll" scrollamount="4"><font color="#aff274" face="monospace"><strong> The Fountain's Handy DWF Calculator </strong></font></marquee>
+<marquee behavior="scroll" scrollamount="4" style="font-size:5vw;"><font color="#aff274" face="monospace"><strong> The Fountain's Handy DWF Calculator </strong></font></marquee>
 <div class="app">
   <div class="left-col">
     <div class="section-label">Products</div>
