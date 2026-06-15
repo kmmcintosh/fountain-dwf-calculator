@@ -110,25 +110,28 @@ body { font-family: system-ui, sans-serif; background: #000; color: #fff; paddin
   </div>
 </div>
 
-<div style="max-width:860px;margin-top:2rem;background:#fff;border:1px solid #e0e0de;border-radius:10px;padding:16px 18px;font-size:13px;line-height:1.7;color:#1a1a18;">
-  <p style="margin-bottom:8px;">☺ Congratulations on surviving another Do West Fest!<br>Time to tally the chits.</p>
-  <p style="font-weight:500;margin-bottom:6px;">Instructions:</p>
-  <ol style="padding-left:18px;margin-bottom:12px;">
-    <li>Add each item type you need to count, and the price. (Tall Cans, Dark & Stormy, Mixed Drink Single, Mixed Drink Double, Soda, Non-Alc Beer, etc.)</li>
-    <li>Enter the items from your first chit. The total $ of that chit will be shown on the right.</li>
-    <li><strong>Write that total $ down on the chit!</strong></li>
-    <li>Click <strong>Add Chit</strong> — the chit is added to the Running Total, and the "This Chit" total is cleared.</li>
-    <li>Continue inputting all the chits the same way. The total amount of all chits entered will continue to be tracked in Running Total.</li>
-    <li>When you've entered your last chit for that batch/day, (<span style="color:#c0392b;font-weight:500;">IMPORTANT!</span>) write down the Running Total for that batch/day.</li>
-    <li>Click <strong>Clear Total</strong> when you're ready to start tallying the next batch.</li>
-  </ol>
-  <p style="font-weight:500;margin-bottom:6px;">Notes:</p>
-  <ul style="padding-left:18px;">
-    <li style="margin-bottom:8px;">I recommend messing around with the calculator for a minute before getting into properly tallying. Add items, remove items, hit the buttons, see what it does.</li>
-    <li style="margin-bottom:8px;">Made a mistake and want to remove the last chit from the Running Total? Hit <strong>Remove Last Chit</strong>.</li>
-    <li><strong>If you want to calculate cash sales separate from digital sales:</strong> As you go through the chits, don't include the receipts that say they were paid in cash (assuming the servers marked that down.) Put them aside. Once you get through all the chits for the day, you write down your digital sales total, then click <strong>Clear Total</strong>. You have your pile of cash sales chits that you put aside as you went, and now you can tally up those. <strong>TL;DR:</strong> Do all the day's digital sales chits, write it down, clear the total, and then do the day's cash sales, write it down, clear the total. <em>This could also apply if you want to tally bar sales chits separate from patio sales chits.</em></li>
-  </ul>
-</div>
+<details style="max-width:860px;margin-top:2rem;background:#fff;border:1px solid #e0e0de;border-radius:10px;padding:16px 18px;font-size:13px;line-height:1.7;color:#1a1a18;">
+  <summary style="font-weight:500;cursor:pointer;color:#1a1a18;">Instructions & Notes</summary>
+  <div style="margin-top:10px;">
+    <p style="margin-bottom:8px;">☺ Congratulations on surviving another Do West Fest!<br>Time to tally the chits.</p>
+    <p style="font-weight:500;margin-bottom:6px;">Instructions:</p>
+    <ol style="padding-left:18px;margin-bottom:12px;">
+      <li>Add each item type you need to count, and the price. (Tall Cans, Mixed Drink Single, Mixed Drink Double, Soda, Non-Alc Beer, etc.)</li>
+      <li>Enter the items from your first chit. The total $ of that chit will be shown on the right.</li>
+      <li><strong>Write that total $ down on the chit!</strong></li>
+      <li>Click <strong>Add Chit</strong> — the chit is added to the Running Total, and the "This Chit" total is cleared.</li>
+      <li>Continue inputting all the chits the same way. The total amount of all chits entered will continue to be tracked in Running Total.</li>
+      <li>When you've entered your last chit for that batch/day, (<span style="color:#c0392b;font-weight:500;">IMPORTANT!</span>) write down the Running Total for that batch/day.</li>
+      <li>Click <strong>Clear Total</strong> when you're ready to start tallying the next batch.</li>
+    </ol>
+    <p style="font-weight:500;margin-bottom:6px;">Notes:</p>
+    <ul style="padding-left:18px;">
+      <li style="margin-bottom:8px;">I recommend messing around with the calculator for a minute before getting into properly tallying. Add items, remove items, hit the buttons, see what it does.</li>
+      <li style="margin-bottom:8px;">Made a mistake and want to remove the last chit from the Running Total? Hit <strong>Remove Last Chit</strong>.</li>
+      <li><strong>If you want to calculate cash sales separate from digital sales:</strong> As you go through the chits, don't include the receipts that say they were paid in cash (assuming the servers marked that down.) Put them aside. Once you get through all the chits for the day, you write down your digital sales total, then click <strong>Clear Total</strong>. You have your pile of cash sales chits that you put aside as you went, and now you can tally up those. <strong>TL;DR:</strong> Do all the day's digital sales chits, write it down, clear the total, and then do the day's cash sales, write it down, clear the total. <em>This could also apply if you want to tally bar sales chits separate from patio sales chits.</em></li>
+    </ul>
+  </div>
+</details>
 
 <script>
 let products = JSON.parse(localStorage.getItem('chitProducts') || 'null') || [];
