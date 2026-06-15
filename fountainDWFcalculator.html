@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chit Calculator</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, sans-serif; background: #f5f5f3; color: #1a1a18; padding: 1.5rem; }
+.app { display: flex; gap: 2rem; align-items: flex-start; }
+.left-col { flex: 0 0 auto; width: 70%; max-width: 420px; }
+.right-col { flex: 1; position: sticky; top: 1.5rem; }
+.section-label { font-size: 11px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+.add-row { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.add-row input { height: 36px; border-radius: 8px; border: 1px solid #ccc; background: #fff; color: #1a1a18; padding: 0 10px; font-size: 13px; }
+.add-row input[type=text] { flex: 2; min-width: 100px; }
+.add-row input[type=number] { flex: 1; min-width: 70px; }
+.add-row button { height: 36px; padding: 0 14px; font-size: 13px; border-radius: 8px; border: 1px solid #ccc; background: transparent; color: #1a1a18; cursor: pointer; }
+.add-row button:hover { background: #ebebea; }
+.products { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.5rem; }
+.prod-row { background: #fff; border: 1px solid #e0e0de; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 12px; max-width: 70%; }
+.prod-info { flex: 1; min-width: 0; }
+.prod-name { font-size: 14px; font-weight: 500; }
+.prod-price { font-size: 12px; color: #777; }
+.count-row { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.btn-adj { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #ccc; background: transparent; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; padding: 0; flex-shrink: 0; }
+.btn-adj:hover { background: #ebebea; }
+.btn-plus { background: #ebebea; }
+.count-num { font-size: 22px; font-weight: 500; min-width: 28px; text-align: center; line-height: 1; }
+.subtotal { font-size: 12px; color: #777; min-width: 40px; text-align: right; flex-shrink: 0; }
+.btn-remove { font-size: 11px; color: #bbb; background: none; border: none; cursor: pointer; padding: 0 0 0 8px; flex-shrink: 0; }
+.btn-remove:hover { color: #c0392b; }
+.totals-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.25rem; }
+.metric { background: #ebebea; border-radius: 8px; padding: 12px 14px; }
+.metric-label { font-size: 11px; color: #777; margin-bottom: 4px; }
+.metric-val { font-size: 22px; font-weight: 500; }
+.metric-val.big { font-size: 28px; }
+.actions { display: flex; flex-direction: column; gap: 8px; }
+.btn-next { height: 40px; padding: 0 20px; font-size: 14px; font-weight: 500; border-radius: 8px; border: 1px solid #ccc; background: #ebebea; cursor: pointer; }
+.btn-next:hover { background: #ddddd8; }
+.btn-undo { height: 40px; padding: 0 16px; font-size: 13px; border-radius: 8px; border: 1px solid #ccc; background: transparent; color: #777; cursor: pointer; }
+.btn-undo:hover { background: #ebebea; }
+.btn-undo:disabled { opacity: .35; cursor: default; }
+.btn-clear { height: 40px; padding: 0 16px; font-size: 13px; border-radius: 8px; border: 1px solid #ccc; background: transparent; color: #777; cursor: pointer; }
+.btn-clear:hover { color: #c0392b; border-color: #c0392b; }
+.empty { color: #bbb; font-size: 13px; padding: .5rem 0; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="left-col">
+    <div class="section-label">Products</div>
+    <div class="add-row">
+      <input type="text" id="newName" placeholder="Product name" />
+      <input type="number" id="newPrice" placeholder="Price $" min="0" step="0.01" />
+      <button onclick="addProduct()">+ Add</button>
+      <button onclick="addDefaults()">Add defaults</button>
+    </div>
+    <div class="products" id="products">
+      <p class="empty">No products yet — add some above.</p>
+    </div>
+  </div>
+
+  <div class="right-col">
+    <div class="totals-row">
+      <div class="metric">
+        <div class="metric-label">This chit</div>
+        <div class="metric-val big" id="chitTotal">$0.00</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Running total (<span id="chitCount">0</span> chits)</div>
+        <div class="metric-val" id="runningTotal">$0.00</div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn-next" onclick="nextChit()">Next chit →</button>
+      <button class="btn-undo" id="undoBtn" onclick="undoLast()" disabled>← Remove last chit</button>
+      <button class="btn-clear" onclick="clearTotal()">Clear total</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let products = JSON.parse(localStorage.getItem('chitProducts') || 'null') || [];
+let runningTotal = parseFloat(localStorage.getItem('chitRunning') || '0');
+let chitCount = parseInt(localStorage.getItem('chitCount') || '0');
+let lastChitAmount = parseFloat(localStorage.getItem('chitLast') || '0');
+
+function save() {
+  localStorage.setItem('chitProducts', JSON.stringify(products));
+  localStorage.setItem('chitRunning', runningTotal.toString());
+  localStorage.setItem('chitCount', chitCount.toString());
+  localStorage.setItem('chitLast', lastChitAmount.toString());
+}
+
+function addDefaults() {
+  const defaults = [['Tall can', 10], ['Mixed drink', 9], ['Shot', 6], ['Wine', 8], ['Water', 3], ['Soft drink', 4]];
+  defaults.forEach(([name, price]) => {
+    if (!products.find(p => p.name.toLowerCase() === name.toLowerCase()))
+      products.push({ name, price, count: 0 });
+  });
+  save(); render();
+}
+
+function addProduct() {
+  const name = document.getElementById('newName').value.trim();
+  const price = parseFloat(document.getElementById('newPrice').value);
+  if (!name || isNaN(price) || price < 0) return;
+  if (products.find(p => p.name.toLowerCase() === name.toLowerCase())) {
+    document.getElementById('newName').value = ''; return;
+  }
+  products.push({ name, price, count: 0 });
+  document.getElementById('newName').value = '';
+  document.getElementById('newPrice').value = '';
+  save(); render();
+}
+
+function adjust(idx, delta) {
+  products[idx].count = Math.max(0, products[idx].count + delta);
+  save(); render();
+}
+
+function removeProduct(idx) {
+  products.splice(idx, 1);
+  save(); render();
+}
+
+function chitTotal() {
+  return products.reduce((s, p) => s + p.count * p.price, 0);
+}
+
+function nextChit() {
+  const total = chitTotal();
+  if (total === 0) return;
+  lastChitAmount = total;
+  runningTotal += total;
+  chitCount++;
+  products.forEach(p => p.count = 0);
+  save(); render();
+}
+
+function undoLast() {
+  if (chitCount === 0 || lastChitAmount === 0) return;
+  runningTotal = Math.max(0, runningTotal - lastChitAmount);
+  chitCount--;
+  lastChitAmount = 0;
+  save(); render();
+}
+
+function clearTotal() {
+  if (!confirm('Clear the running total and chit count?')) return;
+  runningTotal = 0;
+  chitCount = 0;
+  lastChitAmount = 0;
+  products.forEach(p => p.count = 0);
+  save(); render();
+}
+
+function fmt(n) { return '$' + n.toFixed(2); }
+
+function render() {
+  const grid = document.getElementById('products');
+  if (products.length === 0) {
+    grid.innerHTML = '<p class="empty">No products yet — add some above.</p>';
+  } else {
+    grid.innerHTML = products.map((p, i) => `
+      <div class="prod-row">
+        <div class="prod-info">
+          <div class="prod-name">${p.name}</div>
+          <div class="prod-price">${fmt(p.price)} each</div>
+        </div>
+        <div class="count-row">
+          <button class="btn-adj" onclick="adjust(${i}, -1)">−</button>
+          <span class="count-num">${p.count}</span>
+          <button class="btn-adj btn-plus" onclick="adjust(${i}, 1)">+</button>
+        </div>
+        <div class="subtotal">${p.count > 0 ? fmt(p.count * p.price) : '—'}</div>
+        <button class="btn-remove" onclick="removeProduct(${i})">remove</button>
+      </div>
+    `).join('');
+  }
+  document.getElementById('chitTotal').textContent = fmt(chitTotal());
+  document.getElementById('runningTotal').textContent = fmt(runningTotal);
+  document.getElementById('chitCount').textContent = chitCount;
+  document.getElementById('undoBtn').disabled = (chitCount === 0 || lastChitAmount === 0);
+}
+
+document.getElementById('newName').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('newPrice').focus(); });
+document.getElementById('newPrice').addEventListener('keydown', e => { if (e.key === 'Enter') addProduct(); });
+
+render();
+</script>
+</body>
+</html>
