@@ -3,47 +3,47 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Chit Calculator</title>
+<title>The Fountain's Handy Do West Fest Calculator</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: system-ui, sans-serif; background: #f5f5f3; color: #1a1a18; padding: 1.5rem; }
+body { font-family: system-ui, sans-serif; background: #000; color: #fff; padding: 1.5rem; }
 .app { display: flex; gap: 2rem; align-items: flex-start; }
 .left-col { flex: 0 0 auto; width: 70%; max-width: 420px; }
-.right-col { flex: 1; position: sticky; top: 1.5rem; }
-.section-label { font-size: 11px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+.right-col { flex: 0 0 auto; width: 9%; position: sticky; top: 1.5rem; }
+.section-label { font-size: 11px; font-weight: 500; color: #aaa; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
 .add-row { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
-.add-row input { height: 36px; border-radius: 8px; border: 1px solid #ccc; background: #fff; color: #1a1a18; padding: 0 10px; font-size: 13px; }
+.add-row input { height: 36px; border-radius: 8px; border: 1px solid #555; background: #fff; color: #000; padding: 0 10px; font-size: 13px; }
 .add-row input[type=text] { flex: 2; min-width: 100px; }
 .add-row input[type=number] { flex: 1; min-width: 70px; }
-.add-row button { height: 36px; padding: 0 14px; font-size: 13px; border-radius: 8px; border: 1px solid #ccc; background: transparent; color: #1a1a18; cursor: pointer; }
-.add-row button:hover { background: #ebebea; }
+.add-row button { height: 36px; padding: 0 14px; font-size: 13px; font-weight: 700; border-radius: 8px; border: 1px solid #aff274; background: #aff274; color: #000; cursor: pointer; }
+.add-row button:hover { background: #9ddb63; border-color: #9ddb63; }
 .products { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.5rem; }
-.prod-row { background: #fff; border: 1px solid #e0e0de; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 12px; max-width: 70%; }
+.prod-row { background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 12px; max-width: 70%; }
 .prod-info { flex: 1; min-width: 0; }
-.prod-name { font-size: 14px; font-weight: 500; }
-.prod-price { font-size: 12px; color: #777; }
+.prod-name { font-size: 14px; font-weight: 500; color: #fff; }
+.prod-price { font-size: 12px; color: #aaa; }
 .count-row { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.btn-adj { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #ccc; background: transparent; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; padding: 0; flex-shrink: 0; }
-.btn-adj:hover { background: #ebebea; }
-.btn-plus { background: #ebebea; }
-.count-num { font-size: 22px; font-weight: 500; min-width: 28px; text-align: center; line-height: 1; }
-.subtotal { font-size: 12px; color: #777; min-width: 40px; text-align: right; flex-shrink: 0; }
-.btn-remove { font-size: 11px; color: #bbb; background: none; border: none; cursor: pointer; padding: 0 0 0 8px; flex-shrink: 0; }
+.btn-adj { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #aff274; background: #aff274; color: #000; font-weight: 700; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; padding: 0; flex-shrink: 0; }
+.btn-adj:hover { background: #9ddb63; border-color: #9ddb63; }
+.btn-plus { background: #aff274; }
+.count-num { font-size: 22px; font-weight: 500; min-width: 28px; text-align: center; line-height: 1; color: #fff; }
+.subtotal { font-size: 12px; color: #aaa; min-width: 40px; text-align: right; flex-shrink: 0; }
+.btn-remove { font-size: 11px; color: #666; background: none; border: none; cursor: pointer; padding: 0 0 0 8px; flex-shrink: 0; }
 .btn-remove:hover { color: #c0392b; }
 .totals-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.25rem; }
-.metric { background: #ebebea; border-radius: 8px; padding: 12px 14px; }
-.metric-label { font-size: 11px; color: #777; margin-bottom: 4px; }
-.metric-val { font-size: 22px; font-weight: 500; }
+.metric { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 12px 14px; }
+.metric-label { font-size: 11px; color: #aaa; margin-bottom: 4px; }
+.metric-val { font-size: 22px; font-weight: 500; color: #fff; }
 .metric-val.big { font-size: 28px; }
 .actions { display: flex; flex-direction: column; gap: 8px; }
-.btn-next { height: 40px; padding: 0 20px; font-size: 14px; font-weight: 500; border-radius: 8px; border: 1px solid #ccc; background: #ebebea; cursor: pointer; }
-.btn-next:hover { background: #ddddd8; }
-.btn-undo { height: 40px; padding: 0 16px; font-size: 13px; border-radius: 8px; border: 1px solid #ccc; background: transparent; color: #777; cursor: pointer; }
-.btn-undo:hover { background: #ebebea; }
+.btn-next { height: 40px; padding: 0 20px; font-size: 14px; font-weight: 700; border-radius: 8px; border: 1px solid #aff274; background: #aff274; color: #000; cursor: pointer; }
+.btn-next:hover { background: #9ddb63; border-color: #9ddb63; }
+.btn-undo { height: 40px; padding: 0 16px; font-size: 13px; font-weight: 700; border-radius: 8px; border: 1px solid #aff274; background: #aff274; color: #000; cursor: pointer; }
+.btn-undo:hover { background: #9ddb63; border-color: #9ddb63; }
 .btn-undo:disabled { opacity: .35; cursor: default; }
-.btn-clear { height: 40px; padding: 0 16px; font-size: 13px; border-radius: 8px; border: 1px solid #ccc; background: transparent; color: #777; cursor: pointer; }
-.btn-clear:hover { color: #c0392b; border-color: #c0392b; }
-.empty { color: #bbb; font-size: 13px; padding: .5rem 0; }
+.btn-clear { height: 40px; padding: 0 16px; font-size: 13px; font-weight: 700; border-radius: 8px; border: 1px solid #aff274; background: #aff274; color: #000; cursor: pointer; }
+.btn-clear:hover { background: #9ddb63; border-color: #9ddb63; }
+.empty { color: #666; font-size: 13px; padding: .5rem 0; }
 </style>
 </head>
 <body>
@@ -52,10 +52,9 @@ body { font-family: system-ui, sans-serif; background: #f5f5f3; color: #1a1a18; 
   <div class="left-col">
     <div class="section-label">Products</div>
     <div class="add-row">
-      <input type="text" id="newName" placeholder="Product name" />
+      <input type="text" id="newName" placeholder="Product Name" />
       <input type="number" id="newPrice" placeholder="Price $" min="0" step="0.01" />
       <button onclick="addProduct()">+ Add</button>
-      <button onclick="addDefaults()">Add defaults</button>
     </div>
     <div class="products" id="products">
       <p class="empty">No products yet — add some above.</p>
@@ -65,40 +64,39 @@ body { font-family: system-ui, sans-serif; background: #f5f5f3; color: #1a1a18; 
   <div class="right-col">
     <div class="totals-row">
       <div class="metric">
-        <div class="metric-label">This chit</div>
+        <div class="metric-label">This Chit</div>
         <div class="metric-val big" id="chitTotal">$0.00</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Running total (<span id="chitCount">0</span> chits)</div>
+        <div class="metric-label">Running Total (<span id="chitCount">0</span> chits)</div>
         <div class="metric-val" id="runningTotal">$0.00</div>
       </div>
     </div>
     <div class="actions">
-      <button class="btn-next" onclick="nextChit()">Add chit →</button>
-      <button class="btn-undo" id="undoBtn" onclick="undoLast()" disabled>← Remove last chit</button>
-      <button class="btn-clear" onclick="clearTotal()">Clear total</button>
+      <button class="btn-next" onclick="nextChit()">Add Chit →</button>
+      <button class="btn-undo" id="undoBtn" onclick="undoLast()" disabled>← Remove Last Chit</button>
+      <button class="btn-clear" onclick="clearTotal()">Clear Total</button>
     </div>
   </div>
 </div>
 
 <div style="max-width:860px;margin-top:2rem;background:#fff;border:1px solid #e0e0de;border-radius:10px;padding:16px 18px;font-size:13px;line-height:1.7;color:#1a1a18;">
-  <p style="margin-bottom:8px;">Congratulations on surviving another Do West Fest!<br>Time to tally the chits.</p>
+  <p style="margin-bottom:8px;">☺ Congratulations on surviving another Do West Fest!<br>Time to tally the chits.</p>
   <p style="font-weight:500;margin-bottom:6px;">Instructions:</p>
   <ol style="padding-left:18px;margin-bottom:12px;">
-    <li>Add each item type you need to count, and the price. (Tall Cans, Dark and Stormy, Mixed Drink, Mixed Drink Double, Soda, Non-Alc Beer, etc.)</li>
-    <li>Enter your first chit. The total of that chit will be shown on the right.</li>
-    <li><strong>Write that down!</strong></li>
-    <li>Click <strong>Add chit</strong> — the receipt total will clear, and be added to the overall total.</li>
-    <li>Continue inputting all the chits the same way.</li>
-    <li>The total amount of all chits entered will continue to be tracked on the side.</li>
-    <li>When you've entered your last chit for the day, hit <strong>Add chit</strong> and (<span style="color:#c0392b;font-weight:500;">IMPORTANT!</span>) write down the Running Total for that batch/day.</li>
-    <li>Click <strong>Clear total</strong> when you're ready to start tallying the next batch.</li>
+    <li>Add each item type you need to count, and the price. (Tall Cans, Dark & Stormy, Mixed Drink Single, Mixed Drink Double, Soda, Non-Alc Beer, etc.)</li>
+    <li>Enter the items from your first chit. The total $ of that chit will be shown on the right.</li>
+    <li><strong>Write that total $ down on the chit!</strong></li>
+    <li>Click <strong>Add Chit</strong> — the chit is added to the "Running Total, and the "This Chit" total is cleared.</li>
+    <li>Continue inputting all the chits the same way. The total amount of all chits entered will continue to be tracked in Running Total.</li>
+    <li>When you've entered your last chit for that batch/day, (<span style="color:#c0392b;font-weight:500;">IMPORTANT!</span>) write down the Running Total for that batch/day.</li>
+    <li>Click <strong>Clear Total</strong> when you're ready to start tallying the next batch.</li>
   </ol>
   <p style="font-weight:500;margin-bottom:6px;">Notes:</p>
   <ul style="padding-left:18px;">
-    <li style="margin-bottom:8px;">I recommend messing around with it for a minute before getting into properly tallying. Add items, remove items, hit the buttons, see what it does.</li>
-    <li style="margin-bottom:8px;">Made a mistake and want to remove the last chit from the Running Total? Hit <strong>Remove last chit</strong>.</li>
-    <li><strong>If you want to calculate cash sales separate from digital sales:</strong> As you go, don't include the receipts that say they were paid in cash (assuming the servers marked that down.) Put them aside. Once you get through all the chits for the day, you have your pile of cash paid chits. You write down your digital sales total, hit <strong>Clear total</strong>, and then tally up those cash chits you put aside. TL;DR: Do all the day's digital sales chits, write it down, clear the total, and then do the day's cash sales, write it down, clear the total. <em>This could also apply if you want to tally bar sales chits separate from patio sales chits.</em></li>
+    <li style="margin-bottom:8px;">I recommend messing around with the calculator for a minute before getting into properly tallying. Add items, remove items, hit the buttons, see what it does.</li>
+    <li style="margin-bottom:8px;">Made a mistake and want to remove the last chit from the Running Total? Hit <strong>Remove Last Chit</strong>.</li>
+    <li><strong>If you want to calculate cash sales separate from digital sales:</strong> As you go through the chits, don't include the receipts that say they were paid in cash (assuming the servers marked that down.) Put them aside. Once you get through all the chits for the day, you write down your digital sales total, then click <strong>Clear total</strong>. You have your pile of cash sales chits that you put aside as you went, and now you can tally up those. <strong>TL;DR:</strong> Do all the day's digital sales chits, write it down, clear the total, and then do the day's cash sales, write it down, clear the total. <em>This could also apply if you want to tally bar sales chits separate from patio sales chits.</em></li>
   </ul>
 </div>
 
@@ -113,15 +111,6 @@ function save() {
   localStorage.setItem('chitRunning', runningTotal.toString());
   localStorage.setItem('chitCount', chitCount.toString());
   localStorage.setItem('chitLast', lastChitAmount.toString());
-}
-
-function addDefaults() {
-  const defaults = [['Tall can', 10], ['Mixed drink', 9], ['Shot', 6], ['Wine', 8], ['Water', 3], ['Soft drink', 4]];
-  defaults.forEach(([name, price]) => {
-    if (!products.find(p => p.name.toLowerCase() === name.toLowerCase()))
-      products.push({ name, price, count: 0 });
-  });
-  save(); render();
 }
 
 function addProduct() {
@@ -170,7 +159,7 @@ function undoLast() {
 }
 
 function clearTotal() {
-  if (!confirm('Clear the running total and chit count?')) return;
+  if (!confirm('Are you sure that you want to clear the Running Total? Did you write it down yet?')) return;
   runningTotal = 0;
   chitCount = 0;
   lastChitAmount = 0;
