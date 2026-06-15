@@ -244,6 +244,7 @@ function nextChit() {
 
 function undoLast() {
   if (chitCount === 0 || lastChitAmount === 0) return;
+  if (!confirm('You want to remove the last chit from the total?')) return;
   runningTotal = Math.max(0, runningTotal - lastChitAmount);
   chitCount--;
   lastChitAmount = 0;
